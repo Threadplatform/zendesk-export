@@ -15,7 +15,7 @@ post '/create' do
 	Thread.new do
 		create_csv(filename, user, api_key)
 	end
-	# redirect back
+	redirect back
 end
 
 def create_csv(filename, user, api_key)
