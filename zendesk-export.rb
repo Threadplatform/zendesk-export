@@ -30,7 +30,7 @@ class ZendeskExport < Sinatra::Base
 
 	def create_csv(filename, user, api_key)
 		client = ZendeskAPI::Client.new do |config|
-		  config.url = "ENV['ZENDESK_URL']/api/v2" # e.g. https://mydesk.zendesk.com/api/v2
+		  config.url = "https://#{ENV['ZENDESK_BASE']}.zendesk.com/api/v2" # e.g. https://mydesk.zendesk.com/api/v2
 		  config.username = user
 		  config.token = api_key
 		end
