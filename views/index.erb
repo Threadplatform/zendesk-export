@@ -8,7 +8,9 @@
 </head>
 <body>
 	<img class="pure-img zendesk-export-authentication" src="<%= ENV['BRAND_IMAGE_URL'] %>">
-	<div id="flash"><p><%= flash[:notice] %></p></div>
+	<% if flash[:notice] %>
+	<div id="flash"><a href="<%= ENV['EMAIL_LOGIN_URL'] %>" target="_blank" class="pure-button pure-button-primary"><%= flash[:notice] %></a></div>
+	<% end %>
 	<form class="pure-form" action="/create" method="POST">
 	    <fieldset>
 	        <legend>Download All Zendesk Tickets</legend>

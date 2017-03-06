@@ -17,7 +17,7 @@ class ZendeskExport < Sinatra::Base
 		user = params[:user]
 		api_key = params[:apiKey]
 		filename = "tickets#{Time.now.to_i}.csv"
-		'Your csv is being generated. Please wait.'
+		'Your csv is being generated. Plase check your email shortly.'
 		Thread.new do
 			create_csv(filename, user, api_key)
 			send_csv(filename, user)
