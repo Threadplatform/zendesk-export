@@ -1,3 +1,3 @@
 require './zendesk-export'
-run Sinatra::Application
+run ZendeskExport
 

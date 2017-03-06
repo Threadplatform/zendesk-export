@@ -8,6 +8,7 @@
 </head>
 <body>
 	<img class="pure-img zendesk-export-authentication" src="images/Thread14_IdentityP01PANTONE_4-color_wTag-copy.png">
+	<div id="flash"><p><%= flash[:notice] %></p></div>
 	<form class="pure-form" action="/create" method="POST">
 	    <fieldset>
 	        <legend>Download All Zendesk Tickets</legend>
@@ -18,7 +19,7 @@
 	    </fieldset>
 	</form>
 
-	<a href="https://thread-help.zendesk.com/agent/dashboard" target="_blank" class="button-success pure-button">Zendesk</a>
+	<a href="<%=ENV['ZENDESK_URL']%>" target="_blank" class="button-success pure-button">Zendesk</a>
 	
 </body>
 </html>
