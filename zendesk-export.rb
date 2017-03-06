@@ -52,10 +52,10 @@ class ZendeskExport < Sinatra::Base
 	        :attachments => {"#{filename}" => File.read("/tmp/#{filename}")},
 	        :via => :smtp, 
 	        :via_options => {
-	          :address        => ENV['SMPT_ADDRESS'],
+	          :address        => ENV['SMTP_ADDRESS'],
 	          :port           => '25',
 	          :enable_starttls_auto => true,
-	          :user_name      => 'techadmin@thread.org',
+	          :user_name      => ENV['SMTP_USER'],
 	          :password       => ENV['SMTP_PASSWORD'],
 	          :authentication => :plain,
 	          }
