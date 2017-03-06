@@ -22,13 +22,15 @@ class ZendeskExport < Sinatra::Base
 			create_csv(filename, user, api_key)
 			send_csv(filename, user)
 		end
-		flash.now[:notice] = "Your csv is being generated"
+		flash[:notice] = "Your csv is being generated"
 		redirect back
 	end
 
+	private
+
 	def create_csv(filename, user, api_key)
 		client = ZendeskAPI::Client.new do |config|
-		  config.url = ENV['ZENDESK_URL'] # e.g. https://mydesk.zendesk.com/api/v2
+		  config.url = "ENV['ZENDESK_URL']/api/v2" # e.g. https://mydesk.zendesk.com/api/v2
 		  config.username = user
 		  config.token = api_key
 		end
