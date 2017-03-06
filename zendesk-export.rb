@@ -34,10 +34,10 @@ class ZendeskExport < Sinatra::Base
 		  config.token = api_key
 		end
 		csv = CSV.open("/tmp/#{filename}", "w") do |csv|
-		  csv << ['id', 'Status', 'Subject', 'Requester', 'Request date', 'Assignee', 'Tags']
+		  csv << ['id', 'Status', 'Subject', 'Requester', 'Request date', 'Assignee', 'Tags', 'Type', 'Priority', 'To Email', 'Description']
 		  client.tickets.fetch!
 		  client.tickets.all do |ticket|
-		  	csv << [ticket.id, ticket.status, ticket.subject, ticket.requester.name, ticket.created_at, ticket.assignee.name, ticket.tags.map(&:id).join(" ")]
+		  	csv << [ticket.id, ticket.status, ticket.subject, ticket.requester.name, ticket.created_at, ticket.assignee.name, ticket.tags.map(&:id).join(" "), ticket.type, ticket.priority, ticket.via.source.to.address, ticket.description]
 		  end
 		end
 		csv
