@@ -9,7 +9,9 @@
 <body>
 	<img class="pure-img zendesk-export-authentication" src="<%= ENV['BRAND_IMAGE_URL'] %>">
 	<% if flash[:notice] %>
-	<div id="flash"><a href="<%= ENV['EMAIL_LOGIN_URL'] %>" target="_blank" class="pure-button pure-button-primary"><%= flash[:notice] %></a></div>
+		<div id="flash">
+			<a href="<%= ENV['EMAIL_LOGIN_URL'] %>" target="_blank" class="pure-button pure-button-primary"><%= flash[:notice] %></a>
+		</div>
 	<% end %>
 	<form class="pure-form" action="/create" method="POST">
 	    <fieldset>
