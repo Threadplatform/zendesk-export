@@ -6,7 +6,9 @@ require 'pony'
 require 'dotenv/load'
 
 class ZendeskExport < Sinatra::Base
-  enable :sessions
+  configure :production, :development do
+    enable :logging, :sessions
+  end
   use Rack::Flash
 
 	get '/' do
@@ -36,15 +38,17 @@ class ZendeskExport < Sinatra::Base
 		csv = CSV.open("/tmp/#{filename}", "w") do |csv|
 		  csv << ['id', 'Status', 'Subject', 'Requester', 'Request date', 'Assignee', 'Tags', 'Type', 'Priority', 'To Email', 'Description']
 		  client.tickets.fetch!
-		  client.tickets.all do |ticket|
-		  	csv << [ticket.id, ticket.status, ticket.subject, ticket.requester.name, ticket.created_at, ticket.assignee.name, ticket.tags.map(&:id).join(" "), ticket.type, ticket.priority, ticket.via.source.to.address, ticket.description]
+		  client.tickets.all! do |ticket|
+		  	logger.info "ticket"
+		  	assignee_name = ticket.assignee.name if ticket.assignee
+		  	requester_name = ticket.requester.name if ticket.requester
+		  	csv << [ticket.id, ticket.status, ticket.subject, requester_name, ticket.created_at, assignee_name, ticket.tags.map(&:id).join(" "), ticket.type, ticket.priority, ticket.via.source.to.address, ticket.description]
 		  end
 		end
-		csv
 	end
 
 	def send_csv(filename, user)
-	   Pony.mail(
+	   mail = Pony.mail(
 	        :to => user,
 	        :from => "Admin <#{ENV['SMTP_USER']}>",
 	        :subject => "Your csv #{filename}",
